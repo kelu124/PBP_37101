@@ -147,17 +147,17 @@ lstISSUE = df["Issue"].unique()
 themes = st.sidebar.multiselect(
     "Themes to consider",
     options=lstTHEMES,
-    default=lstTHEMES)
+    default=[])
 
 purposes = st.sidebar.multiselect(
     "Purposes to consider",
     options=lstPURPOSE,
-    default=lstPURPOSE)
+    default=[])
 
 issues = st.sidebar.multiselect(
     "Issues to consider",
     options=lstISSUE,
-    default=lstISSUE)
+    default=[])
 
 
 
@@ -182,10 +182,10 @@ st.pyplot(fig)
 
 items = []
 X= df.drop_duplicates(subset=["Source"]).reset_index(drop=True)
-st.write("# Initiatives map")
+st.write("# Initiatives map with "+str(len(X))+" items")
 if len(X) > 50:
     st.warning("#### __Beware__ - there are more than 50 initiatives, we'll pick randomly 50 of them")
-X = X.sample(50).reset_index(drop=True)
+    X = X.sample(frac=1).reset_index(drop=True).head(50)
 
 
 
