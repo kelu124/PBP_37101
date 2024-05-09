@@ -182,12 +182,14 @@ st.pyplot(fig)
 
 items = []
 X= df.drop_duplicates(subset=["Source"]).reset_index(drop=True)
+st.write("# Initiatives map")
 if len(X) > 50:
-    st.write("Beware - there are more than 50 initiatives, we'll pick randomly 50 of them")
+    st.warning("#### __Beware__ - there are more than 50 initiatives, we'll pick randomly 50 of them")
 X = X.sample(50).reset_index(drop=True)
 
 
-st.write("# Initiatives map")
+
+
 
 
 
