@@ -15,6 +15,7 @@ st.set_page_config(layout="wide")
 
 df = pd.read_parquet("data/dataset.parquet.gzip")
 df = df[df.Place == "Paris"].reset_index(drop=True)
+df["Source_Title"] = df["Source_Title"].apply(lambda x: str(x).replace("\n"," "))
 print(len(df.Source.unique()))
 
 def getXY(PATH="content.md"):
@@ -172,34 +173,58 @@ if len(issues):
 ListActions = DF.Source.unique()
 df = df[df.Source.isin(ListActions)]
 
-st.write("# Overview of initiatives map")
+optionActivity = st.selectbox(
+   "Would you like to zoom in on an activity?",
+   ["All"]+list(df["Source_Title"].unique())
+)
 
-fig, ax = createImg(df,dfRef=pd.DataFrame(),title="Mapping of Paris participatory budget initiatives")
+overLimit = False
+if optionActivity == "All":
+    items = []
+    X = df.drop_duplicates(subset=["Source"]).reset_index(drop=True)
 
+    if len(X) > 50:
+        overLimit = True
+        X = X.sample(frac=1).reset_index(drop=True).head(50)
+
+    fig, ax = createImg(df, dfRef=pd.DataFrame(), title="Mapping of Paris participatory budget initiatives")
+else:
+    X =df[df["Source_Title"] == optionActivity].reset_index(drop=True)
+
+    st.write("# Overview of initiatives map")
+
+    if optionActivity:
+        st.write(optionActivity)
+
+    fig, ax = createImg(X, dfRef=pd.DataFrame(), title="Mapping of Paris participatory budget initiatives")
+
+
+
+if overLimit:
+    st.warning("#### __Beware__ - there are more than 50 initiatives, we'll pick randomly 50 of them")
 
 st.pyplot(fig)
 
 
-items = []
-X= df.drop_duplicates(subset=["Source"]).reset_index(drop=True)
-st.write("# Initiatives map with "+str(len(X))+" items")
-if len(X) > 50:
-    st.warning("#### __Beware__ - there are more than 50 initiatives, we'll pick randomly 50 of them")
-    X = X.sample(frac=1).reset_index(drop=True).head(50)
 
 
-
-
-
-
-
-for ix, row in X.iterrows():
-    st.write("### "+str(ix+1)+". "+row["Source_Title"].replace("\n"," "))
-    st.write("__Link to the initiative__:",row["Lien URL vers le projet lauréat"])
-    st.write("__Theme__:",row["Thématique"])
-    st.write("__Status__:",row["Avancement du projet"])
-    st.write("__Budget__:",row["Budget global du projet lauréat"],"€")
-    st.write("__Summary__\n",row["Source"])
-if 0:
-    st.write("# Raw data")
+if optionActivity == "All":
+    st.write("# Initiatives map with "+str(len(X))+" items")
+    for ix, row in X.iterrows():
+        st.write("### "+str(ix+1)+". "+row["Source_Title"].replace("\n"," "))
+        st.write("__Link to the initiative__:",row["Lien URL vers le projet lauréat"])
+        st.write("__Theme__:",row["Thématique"])
+        st.write("__Status__:",row["Avancement du projet"])
+        st.write("__Budget__:",row["Budget global du projet lauréat"],"€")
+        st.write("__Summary__\n",row["Source"])
+    if 0:
+        st.write("# Raw data")
+        st.write(df)
+else:
+    st.write("# Details ")
+    st.write(X.iloc[0]["Lien URL vers le projet lauréat"])
+    st.write(X.iloc[0]["Source"])
+    for ix,row in X.iterrows():
+        st.write("#### "+row["Purpose"]+" x " + row["Issue"]+ " (Assessment: " +row["Scale"]+": "+str(row["Score"])+")")
+        st.write(row["Justification"])
     st.write(df)
