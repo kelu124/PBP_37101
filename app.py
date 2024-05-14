@@ -13,7 +13,7 @@ matplotlib.rcParams['font.family'] = ['sans-serif']
 
 st.set_page_config(layout="wide")
 
-df = pd.read_parquet("data/dataset.parquet.gzip")
+df = pd.read_parquet("data/dataset_v2.parquet.gzip")
 df = df[df.Place == "Paris"].reset_index(drop=True)
 df["Source_Title"] = df["Source_Title"].apply(lambda x: str(x).replace("\n"," "))
 print(len(df.Source.unique()))
