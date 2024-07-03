@@ -216,14 +216,21 @@ if optionActivity == "All":
         st.write("__Theme__:",row["Thématique"])
         st.write("__Status__:",row["Avancement du projet"])
         st.write("__Budget__:",row["Budget global du projet lauréat"],"€")
-        st.write("__Summary__\n",row["Source"])
-    if 0:
-        st.write("# Raw data")
-        st.write(df)
+        st.write("__Summary__\n",row["Summary"])
+        st.write("__Original__\n",row["Source"])
+
 else:
-    st.write("# Details ")
-    st.write(X.iloc[0]["Lien URL vers le projet lauréat"])
-    st.write(X.iloc[0]["Source"])
+    row = X.iloc[0]
+    st.write("#  "+row["Source_Title"].replace("\n"," "))
+    st.write("## Longer summary__\n",row["Paragraph"])
+    st.write("## Summary__\n",row["Summary"])
+    st.write("__Link to the initiative__:",row["Lien URL vers le projet lauréat"])
+    st.write("__Theme__:",row["Thématique"])
+    st.write("__Status__:",row["Avancement du projet"])
+    st.write("__Budget__:",row["Budget global du projet lauréat"],"€")
+    s
+    st.write("__Original__\n",row["Source"])
+    
     for ix,row in X.iterrows():
         st.write("#### "+row["Purpose"]+" x " + row["Issue"]+ " (Assessment: " +row["Scale"]+": "+str(row["Score"])+")")
         st.write(row["Justification"])
