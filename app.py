@@ -222,16 +222,19 @@ if optionActivity == "All":
 else:
     row = X.iloc[0]
     st.write("#  "+row["Source_Title"].replace("\n"," "))
-    st.write("## Longer summary__\n",row["Paragraph"])
-    st.write("## Summary__\n",row["Summary"])
+
+    st.write("## __Summary__\n",row["Summary"])
+    st.write("## __Longer summary__\n",row["Paragraph"])
+
     st.write("__Link to the initiative__:",row["Lien URL vers le projet lauréat"])
     st.write("__Theme__:",row["Thématique"])
     st.write("__Status__:",row["Avancement du projet"])
     st.write("__Budget__:",row["Budget global du projet lauréat"],"€")
-    s
-    st.write("__Original__\n",row["Source"])
     
+    
+    st.write("# __Indicators__\n",row["Summary"])
     for ix,row in X.iterrows():
         st.write("#### "+row["Purpose"]+" x " + row["Issue"]+ " (Assessment: " +row["Scale"]+": "+str(row["Score"])+")")
         st.write(row["Justification"])
+    st.write("# __Original text__\n",row["Source"])
     st.write(df)

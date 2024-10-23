@@ -40,7 +40,7 @@ You will find below different themes, grouped in two groups, with their respecti
 ## B.12 Mobility
 - Definition: : actions aimed at promoting the development of public transport, and of active and alternative transportation modes (e.g. electric cars, carpools). It includes actions aimed at fostering the integration of information technology in the management of mobility, the regulation of goods and people transportation (e.g. reduction of speed) and parking policy.
 
-What I will ask you, is, based on text paragraphs I will subsequently share with you, to extract what the main pairs (one element from Group A, one from Group B) for this text are.
+What I will ask you, is, based on texts I will subsequently share with you, to extract what the main pairs (one element from Group A, one from Group B) for this text are.
 Your answer needs to take the form of a list (as long as possible - try to get either at least 30 elements or until you reach a Score of 40) of bullet points, under the form:
 * (GroupAelement, GroupBelement, Score, Justification, Scale)
  where groupAelement and GroupBelement are the codes of the topics, score a value between 0 and 100 capturing how relevant (100 is the max) the pair is, and 'justification' is a single phrase that details why you chose this pair.
